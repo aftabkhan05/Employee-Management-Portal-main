@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" th:replace="~{user-base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>User</title>
+</head>
+<body>
+<section>
+  <h1></h1>
+
+<!--  <div class="row">-->
+
+
+<!--      <div class="col-6 col-sm-2 mt-2">-->
+<!--          <div class="card" style="cursor: pointer;">-->
+<!--           <div class="card-body">-->
+<!--             <b>Development [1]</b>-->
+<!--           </div>-->
+<!--          </div>-->
+<!--      </div>-->
+
+<!--      <div class="col-6 col-sm-2 mt-2">-->
+<!--          <div class="card" style="cursor: pointer;">-->
+<!--           <div class="card-body">-->
+<!--             <b>QA Testing [1]</b>-->
+<!--           </div>-->
+<!--          </div>-->
+<!--      </div>-->
+
+<!--      <div class="col-6 col-sm-2 mt-2">-->
+<!--          <div class="card" style="cursor: pointer;">-->
+<!--           <div class="card-body">-->
+<!--             <b>Analyst[1]</b>-->
+<!--           </div>-->
+<!--          </div>-->
+<!--      </div>-->
+
+<!--      <div class="col-6 col-sm-2 mt-2">-->
+<!--          <div class="card" style="cursor: pointer;">-->
+<!--           <div class="card-body">-->
+<!--             <b>HR Team [1]</b>-->
+<!--           </div>-->
+<!--          </div>-->
+<!--      </div>-->
+
+<!--      <div class="col-6 col-sm-2 mt-2">-->
+<!--          <div class="card" style="cursor: pointer;">-->
+<!--           <div class="card-body">-->
+<!--             <b>Security [1]</b>-->
+<!--           </div>-->
+<!--          </div>-->
+<!--      </div>-->
+
+<!--      <div class="col-6 col-sm-2 mt-2">-->
+<!--          <div class="card" style="cursor: pointer;">-->
+<!--           <div class="card-body">-->
+<!--             <b>Sales Market [1]</b>-->
+<!--           </div>-->
+<!--          </div>-->
+<!--      </div>-->
+
+
+<!--  </div>-->
+
+    <div class="row">
+        <div class="col-6 col-sm-2 mt-2" th:each="item, iterStat : ${desgCounts}">
+
+            <!-- Color 1: Blue -->
+            <div th:if="${iterStat.index % 6 == 0}" class="card text-white" style="cursor: pointer; background-color: #4e73df;">
+                <div class="card-body">
+                    <b th:text="${item[0]} + ' [' + ${item[1]} + ']'">Designation[0]</b>
+                </div>
+            </div>
+
+            <!-- Color 2: Green -->
+            <div th:if="${iterStat.index % 6 == 1}" class="card text-white" style="cursor: pointer; background-color: #1cc88a;">
+                <div class="card-body">
+                    <b th:text="${item[0]} + ' [' + ${item[1]} + ']'">Designation[0]</b>
+                </div>
+            </div>
+
+            <!-- Color 3: Orange -->
+            <div th:if="${iterStat.index % 6 == 2}" class="card text-white" style="cursor: pointer; background-color: #f6c23e;">
+                <div class="card-body">
+                    <b th:text="${item[0]} + ' [' + ${item[1]} + ']'">Designation[0]</b>
+                </div>
+            </div>
+
+            <!-- Color 4: Red -->
+            <div th:if="${iterStat.index % 6 == 3}" class="card text-white" style="cursor: pointer; background-color: #e74a3b;">
+                <div class="card-body">
+                    <b th:text="${item[0]} + ' [' + ${item[1]} + ']'">Designation[0]</b>
+                </div>
+            </div>
+
+            <!-- Color 5: Purple -->
+            <div th:if="${iterStat.index % 6 == 4}" class="card text-white" style="cursor: pointer; background-color: #6f42c1;">
+                <div class="card-body">
+                    <b th:text="${item[0]} + ' [' + ${item[1]} + ']'">Designation[0]</b>
+                </div>
+            </div>
+
+            <!-- Color 6: Teal -->
+            <div th:if="${iterStat.index % 6 == 5}" class="card text-white" style="cursor: pointer; background-color: #20c9a6;">
+                <div class="card-body">
+                    <b th:text="${item[0]} + ' [' + ${item[1]} + ']'">Designation[0]</b>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+<!--  <div class="row">-->
+
+
+<!--      <div class="col-6 col-sm-2 mt-2">-->
+<!--          <div class="card" style="cursor: pointer;">-->
+<!--           <div class="card-body bg-warning">-->
+<!--             <b>Pending [1]</b>-->
+<!--           </div>-->
+<!--          </div>-->
+<!--      </div>-->
+
+<!--      <div class="col-6 col-sm-2 mt-2">-->
+<!--          <div class="card" style="cursor: pointer;">-->
+<!--           <div class="card-body bg-success">-->
+<!--             <b style="color: white;">Approved [2]</b>-->
+<!--           </div>-->
+<!--          </div>-->
+<!--      </div>-->
+
+<!--      <div class="col-6 col-sm-2 mt-2">-->
+<!--          <div class="card" style="cursor: pointer;">-->
+<!--           <div class="card-body bg-info">-->
+<!--             <b style="color: white;">Canceled [1]</b>-->
+<!--           </div>-->
+<!--          </div>-->
+<!--      </div>-->
+
+<!--      <div class="col-6 col-sm-2 mt-2">-->
+<!--          <div class="card" style="cursor: pointer;">-->
+<!--           <div class="card-body bg-danger">-->
+<!--             <b style="color: white;">Denied [1]</b>-->
+<!--           </div>-->
+<!--          </div>-->
+<!--      </div>-->
+
+<!--      <div class="col-6 col-sm-2 mt-2">-->
+<!--          <div class="card" style="cursor: pointer;">-->
+<!--           <div class="card-body bg-primary">-->
+<!--             <b style="color: white;">All [3]</b>-->
+<!--           </div>-->
+<!--          </div>-->
+<!--      </div>-->
+
+
+
+
+<!--  </div>-->
+
+  <!-- End Above Status -->
+    <div class="row">
+
+        <div class="col-6 col-sm-2 mt-2">
+            <div class="card" style="cursor: pointer;">
+                <div class="card-body bg-warning">
+                    <b id="status-Pending"
+                       th:text="'Pending [' + ${statusCounts['Pending']} + ']'">
+                        Pending[0]
+                    </b>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-sm-2 mt-2">
+            <div class="card" style="cursor: pointer;">
+                <div class="card-body bg-success">
+                    <b id="status-Approved" style="color: white;"
+                       th:text="'Approved [' + ${statusCounts['Approved']} + ']'">
+                        Approved[0]
+                    </b>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-sm-2 mt-2">
+            <div class="card" style="cursor: pointer;">
+                <div class="card-body bg-info">
+                    <b id="status-Cancelled" style="color: white;"
+                       th:text="'Cancelled [' + ${statusCounts['Cancelled']} + ']'">
+                        Cancelled[0]
+                    </b>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-sm-2 mt-2">
+            <div class="card" style="cursor: pointer;">
+                <div class="card-body bg-danger">
+                    <b id="status-Denied" style="color: white;"
+                       th:text="'Denied [' + ${statusCounts['Denied']} + ']'">
+                        Denied[0]
+                    </b>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-sm-2 mt-2">
+            <div class="card" style="cursor: pointer;">
+                <div class="card-body bg-primary">
+                    <b id="status-All" style="color: white;"
+                       th:text="'All [' + ${statusCounts['All']} + ']'">
+                        All[0]
+                    </b>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+  <div class="row mb-5">
+
+     <div class="col-md-8 mt-3">
+
+         <div class="card">
+            <div class="card-body">
+              <h5>Recent Activity</h5>
+              <hr>
+              <table  class="table" style="width:100%">
+        <thead>
+            <tr>
+                <th>S.No</th>
+
+                <th>Subject</th>
+                <th>Description</th>
+
+                <th>Date</th>
+                <th>For Approve</th>
+            </tr>
+        </thead>
+        <tbody>
+           <tr th:each="e,i : ${statusList}">
+            <td th:text="${i.index + 1}">1</td>
+
+            <td   th:text="${e.subject}">Application</td>
+            <td   th:text="${e.text}">Hello Sir, I want 10 days leave because I am going for training.</td>
+            <td   th:text="${e.addedDate}">2024-04-01</td>
+            <td style="cursor: pointer">
+
+
+                    <span th:text="${e.status}"></span>
+
+            </td>
+        </tr>
+    </tbody>
+    </table>
+            </div>
+         </div>
+
+     </div>
+
+      <div class="col-md-4 mt-3">
+          <div class="card">
+              <div class="card-body">
+                  <h5>Up Coming Birthday </h5>
+                  <hr>
+
+                  <!-- ✅ Dynamic Birthdays -->
+                  <div th:each="emp : ${birthdays}">
+                      <div class="d-flex justify-content-around w-100 mt-2">
+                          <!-- Profile Photo -->
+                          <img alt="img"
+                               th:src="@{/img/default.png}"
+                               style="height: 35px; width: 35px; border-radius: 50%">
+
+                          <!-- Name -->
+                          <b class="mt-1" th:text="${emp.employeeName}">Name</b>
+
+                          <!-- Birthday Icon -->
+                          <i class="fa-solid fa-cake-candles mt-1" style="color: red;"></i>
+
+                          <!-- Date of Birth -->
+                          <span class="mt-1" th:text="${emp.dateOfBirth}">DD-MM-YYYY</span>
+                      </div>
+                  </div>
+
+                  <!-- ✅ Show if no birthdays -->
+                  <div th:if="${#lists.isEmpty(birthdays)}">
+                      <p class="text-muted text-center mt-2">No Birthdays This Month</p>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+
+
+</section>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

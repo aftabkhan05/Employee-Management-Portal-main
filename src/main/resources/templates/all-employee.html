@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>All Employee</title>
+    <style>
+        .filter-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            padding: 20px 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+        }
+
+        .filter-card label {
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            margin-bottom: 0;
+        }
+
+        .filter-card .filter-title {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-input {
+            border: none;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 14px;
+            background: rgba(255,255,255,0.95);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 160px;
+            transition: all 0.2s;
+        }
+
+        .filter-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255,255,255,0.5);
+            background: #fff;
+        }
+
+        .filter-input::placeholder {
+            color: #aaa;
+            font-size: 13px;
+        }
+
+        .btn-filter {
+            background: #fff;
+            color: #667eea;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 22px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: all 0.2s;
+        }
+
+        .btn-filter:hover {
+            background: #f0f0ff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn-reset {
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            border: 2px solid rgba(255,255,255,0.5);
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-reset:hover {
+            background: rgba(255,255,255,0.25);
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .salary-badge {
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .separator {
+            color: rgba(255,255,255,0.8);
+            font-size: 18px;
+            font-weight: 300;
+        }
+
+        /* Table Styling */
+        .table-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .table-header-bar {
+            background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+            padding: 18px 24px;
+            border-bottom: 1px solid #e8ebff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .table-header-bar h5 {
+            margin: 0;
+            font-weight: 700;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .emp-count-badge {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        #example thead th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white !important;
+            font-weight: 600;
+            font-size: 13px;
+            padding: 14px 12px;
+            border: none;
+            white-space: nowrap;
+        }
+
+        #example tbody tr {
+            transition: background 0.15s;
+        }
+
+        #example tbody tr:hover {
+            background: #f5f6ff !important;
+        }
+
+        #example tbody td {
+            font-size: 13px;
+            padding: 12px;
+            color: #444;
+            vertical-align: middle;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .emp-id-badge {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 8px;
+            padding: 3px 10px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .salary-cell {
+            font-weight: 700;
+            color: #2e7d32;
+        }
+
+        .page-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .page-subtitle {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<section>
+    <div class="container-fluid mt-3 px-4">
+
+        <!-- Page Title -->
+        <div class="mb-3">
+            <div class="page-title">
+                <i class="fas fa-users me-2" style="color:#667eea;"></i> All Employees
+            </div>
+            <div class="page-subtitle">Manage and filter your employee records</div>
+        </div>
+
+        <!-- ✅ Modern Salary Filter Card -->
+        <div class="filter-card">
+            <div class="filter-title">
+                <i class="fas fa-filter"></i> Filter by Salary Range
+            </div>
+            <form th:action="@{/all-employee}" method="get"
+                  class="d-flex align-items-center gap-3 flex-wrap">
+
+                <div class="d-flex align-items-center gap-2">
+                    <label>Min ₹</label>
+                    <input type="number"
+                           name="minSalary"
+                           th:value="${minSalary}"
+                           placeholder="e.g. 20000"
+                           class="filter-input" />
+                </div>
+
+                <span class="separator">→</span>
+
+                <div class="d-flex align-items-center gap-2">
+                    <label>Max ₹</label>
+                    <input type="number"
+                           name="maxSalary"
+                           th:value="${maxSalary}"
+                           placeholder="e.g. 100000"
+                           class="filter-input" />
+                </div>
+
+                <button type="submit" class="btn-filter">
+                    <i class="fas fa-search me-1"></i> Apply Filter
+                </button>
+
+                <a th:href="@{/all-employee}" class="btn-reset">
+                    <i class="fas fa-times me-1"></i> Reset
+                </a>
+
+                <!-- Active filter badge -->
+                <span th:if="${minSalary != null and maxSalary != null}"
+                      class="salary-badge ms-2">
+                    <i class="fas fa-check-circle me-1"></i>
+                    ₹<span th:text="${minSalary}"></span>
+                    &nbsp;–&nbsp;
+                    ₹<span th:text="${maxSalary}"></span>
+                </span>
+
+            </form>
+        </div>
+
+        <!-- Table Card -->
+        <div class="table-card">
+
+            <div class="table-header-bar">
+                <h5><i class="fas fa-table me-2" style="color:#667eea;"></i>Employee Records</h5>
+                <span class="emp-count-badge">
+                    <span th:text="${#lists.size(allEmployee)}"></span> Employees
+                </span>
+            </div>
+
+            <div class="p-3 table-responsive">
+                <table id="example" class="display nowrap" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>EMP ID</th>
+                        <th>Employee Name</th>
+                        <th>Email</th>
+                        <th>Gender</th>
+                        <th>Date of Birth</th>
+                        <th>Joining Date</th>
+                        <th>Mobile Number</th>
+                        <th>Aadhaar Number</th>
+                        <th>Account Number</th>
+                        <th>Department</th>
+                        <th>Previous Company</th>
+                        <th>PF Number</th>
+                        <th>Salary</th>
+                        <th>Current Address</th>
+                        <th>Permanent Address</th>
+                        <th>Active</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="e : ${allEmployee}">
+                        <td>
+                                <span class="emp-id-badge"
+                                      th:text="'HMP'+${e.id}"></span>
+                        </td>
+                        <td th:text="${e.employeeName}"></td>
+                        <td th:text="${e.email}"></td>
+                        <td th:text="${e.gender}"></td>
+                        <td th:text="${e.dateOfBirth}"></td>
+                        <td th:text="${e.joinDate}"></td>
+                        <td th:text="${e.mobileNumber}"></td>
+                        <td th:text="${e.aadhaarNumber}"></td>
+                        <td th:text="${e.accountNumber}"></td>
+                        <td th:text="${e.department}"></td>
+                        <td th:text="${e.previousCompany}"></td>
+                        <td th:text="${e.pfNumber}"></td>
+                        <td class="salary-cell"
+                            th:text="'₹' + ${e.salary}"></td>
+                        <td th:text="${e.currentAddress}"></td>
+                        <td th:text="${e.permanentAddress}"></td>
+                        <td th:text="${e.active}"></td>
+                        <td th:text="${e.role}"></td>
+                        <td>
+                            <a th:onclick="|editRecord(${e.id})|"
+                               style="color:#667eea; cursor:pointer;"
+                               class="fa-solid fa-pen-to-square ms-2 fs-6"></a>
+                            <i th:onclick="|deleteRecordById(${e.id})|"
+                               style="color:#e53935; cursor:pointer;"
+                               class="fas fa-trash ms-2 fs-6"></i>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance Report</title>
+</head>
+<body>
+<section>
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="card" style="border-radius: 12px; border: none;
+                                     box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <div class="card-body">
+
+                    <!-- ✅ Fix 1 — Header div properly closed -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 style="color: #2c3e50; font-weight: bold;">
+                            <i class="fas fa-chart-bar" style="color: #3498db;"></i>
+                            Monthly Attendance Report
+                        </h5>
+                        <!-- ✅ Fix 2 — Added missing < before i -->
+                        <a th:href="@{/attendance}"
+                           style="background-color: #3498db; color: white;
+                                  padding: 8px 16px; border-radius: 8px;
+                                  text-decoration: none; font-weight: bold;
+                                  display: inline-block;">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </a>
+                    </div> <!-- ✅ Fix 3 — Closing header div -->
+
+                    <!-- ✅ Fix 4 — Form is now outside header div -->
+                    <form th:action="@{/attendance-report}" method="get"
+                          class="d-flex flex-wrap gap-2 mb-3 align-items-center">
+                        <select name="month" class="form-control" style="width: 150px;">
+                            <option value="1"  th:selected="${month == 1}">January</option>
+                            <option value="2"  th:selected="${month == 2}">February</option>
+                            <option value="3"  th:selected="${month == 3}">March</option>
+                            <option value="4"  th:selected="${month == 4}">April</option>
+                            <option value="5"  th:selected="${month == 5}">May</option>
+                            <option value="6"  th:selected="${month == 6}">June</option>
+                            <option value="7"  th:selected="${month == 7}">July</option>
+                            <option value="8"  th:selected="${month == 8}">August</option>
+                            <option value="9"  th:selected="${month == 9}">September</option>
+                            <option value="10" th:selected="${month == 10}">October</option>
+                            <option value="11" th:selected="${month == 11}">November</option>
+                            <option value="12" th:selected="${month == 12}">December</option>
+                        </select>
+                        <input type="number" name="year" class="form-control"
+                               style="width: 100px;" th:value="${year}">
+                        <button type="submit"
+                                style="background-color: #2c3e50; color: white;
+                                       border: none; padding: 8px 16px;
+                                       border-radius: 8px; cursor: pointer;">
+                            <i class="fas fa-search"></i> Filter
+                        </button>
+                    </form>
+
+                    <!-- ✅ Summary Cards -->
+                    <div class="row mb-3">
+                        <div class="col-md-3 col-6 mb-2">
+                            <div style="background-color: #2ecc71; color: white;
+                                        padding: 15px; border-radius: 10px; text-align: center;">
+                                <h4 th:text="${totalPresent}">0</h4>
+                                <b>Present</b>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-2">
+                            <div style="background-color: #e74c3c; color: white;
+                                        padding: 15px; border-radius: 10px; text-align: center;">
+                                <h4 th:text="${totalAbsent}">0</h4>
+                                <b>Absent</b>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-2">
+                            <div style="background-color: #f6c23e; color: white;
+                                        padding: 15px; border-radius: 10px; text-align: center;">
+                                <h4 th:text="${totalHalfDay}">0</h4>
+                                <b>Half Day</b>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-2">
+                            <div style="background-color: #9b59b6; color: white;
+                                        padding: 15px; border-radius: 10px; text-align: center;">
+                                <h4 th:text="${totalLeave}">0</h4>
+                                <b>Leave</b>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ✅ Report Table -->
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr style="background-color: #2c3e50; color: white;">
+                            <th>S.No</th>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="att, i : ${report}">
+                            <td th:text="${i.count}"></td>
+                            <td th:text="${att.employeeName}"></td>
+                            <td th:text="${att.department}"></td>
+                            <td>
+                                    <span th:if="${att.status == 'PRESENT'}"
+                                          style="background-color: #2ecc71; color: white;
+                                                 padding: 4px 10px; border-radius: 20px;
+                                                 font-size: 12px;">✅ Present</span>
+                                <span th:if="${att.status == 'ABSENT'}"
+                                      style="background-color: #e74c3c; color: white;
+                                                 padding: 4px 10px; border-radius: 20px;
+                                                 font-size: 12px;">❌ Absent</span>
+                                <span th:if="${att.status == 'HALF_DAY'}"
+                                      style="background-color: #f6c23e; color: white;
+                                                 padding: 4px 10px; border-radius: 20px;
+                                                 font-size: 12px;">🕐 Half Day</span>
+                                <span th:if="${att.status == 'LEAVE'}"
+                                      style="background-color: #9b59b6; color: white;
+                                                 padding: 4px 10px; border-radius: 20px;
+                                                 font-size: 12px;">📅 Leave</span>
+                            </td>
+                            <td th:text="${att.attendanceDate}"></td>
+                        </tr>
+
+                        <tr th:if="${#lists.isEmpty(report)}">
+                            <td colspan="5" class="text-center text-muted">
+                                No Attendance Records Found
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Payroll</title>
+</head>
+<body>
+<section>
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="card" style="border-radius: 12px; border: none;
+                                     box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <div class="card-body">
+
+                    <!-- Header -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 style="color: #2c3e50; font-weight: bold;">
+                            <i class="fas fa-money-bill-wave"
+                               style="color: #2ecc71;"></i>
+                            Payroll Management
+                        </h5>
+                    </div>
+                    <hr>
+
+                    <!-- Generate Form -->
+                    <div class="card mb-4"
+                         style="background-color: #f8f9fa;
+                                border-radius: 10px; border: none;">
+                        <div class="card-body">
+                            <h6 style="color: #2c3e50; font-weight: bold;">
+                                Generate Salary Slip
+                            </h6>
+                            <form th:action="@{/generate-payroll}"
+                                  method="post"
+                                  class="d-flex flex-wrap gap-3 mt-3
+                                         align-items-end">
+
+                                <!-- Employee Select -->
+                                <div>
+                                    <label style="font-weight: bold;
+                                                  color: #555;">
+                                        Select Employee
+                                    </label>
+                                    <select name="employeeId"
+                                            class="form-control"
+                                            style="width: 200px;" required>
+                                        <option value="">
+                                            -- Select Employee --
+                                        </option>
+                                        <option th:each="emp : ${allEmployees}"
+                                                th:value="${emp.id}"
+                                                th:text="${emp.employeeName}">
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <!-- Month Select -->
+                                <div>
+                                    <label style="font-weight: bold;
+                                                  color: #555;">Month</label>
+                                    <select name="month"
+                                            class="form-control"
+                                            style="width: 150px;" required>
+                                        <option value="JANUARY">January</option>
+                                        <option value="FEBRUARY">February</option>
+                                        <option value="MARCH">March</option>
+                                        <option value="APRIL"
+                                                th:selected="true">April</option>
+                                        <option value="MAY">May</option>
+                                        <option value="JUNE">June</option>
+                                        <option value="JULY">July</option>
+                                        <option value="AUGUST">August</option>
+                                        <option value="SEPTEMBER">September</option>
+                                        <option value="OCTOBER">October</option>
+                                        <option value="NOVEMBER">November</option>
+                                        <option value="DECEMBER">December</option>
+                                    </select>
+                                </div>
+
+                                <!-- Year -->
+                                <div>
+                                    <label style="font-weight: bold;
+                                                  color: #555;">Year</label>
+                                    <input type="number"
+                                           name="year"
+                                           class="form-control"
+                                           style="width: 100px;"
+                                           th:value="${currentYear}"
+                                           required>
+                                </div>
+
+                                <!-- Generate Button -->
+                                <div>
+                                    <button type="submit"
+                                            style="background-color: #2ecc71;
+                                                   color: white; border: none;
+                                                   padding: 8px 20px;
+                                                   border-radius: 8px;
+                                                   cursor: pointer;
+                                                   font-weight: bold;">
+                                        <i class="fas fa-plus"></i>
+                                        Generate
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Payroll Table -->
+                    <h6 style="color: #2c3e50; font-weight: bold;">
+                        Generated Payrolls
+                    </h6>
+                    <table class="table table-bordered" id="example">
+                        <thead>
+                        <tr style="background-color: #2c3e50;
+                                       color: white;">
+                            <th>S.No</th>
+                            <th>Employee</th>
+                            <th>Department</th>
+                            <th>Month/Year</th>
+                            <th>Basic</th>
+                            <th>Gross</th>
+                            <th>Deductions</th>
+                            <th>Net Salary</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="p, i : ${payrolls}">
+                            <td th:text="${i.count}"></td>
+                            <td th:text="${p.employeeName}"></td>
+                            <td th:text="${p.department}"></td>
+                            <td th:text="${p.month} + ' ' + ${p.year}"></td>
+                            <td th:text="'₹' + ${p.basicSalary}"></td>
+                            <td th:text="'₹' + ${p.grossSalary}"></td>
+                            <td th:text="'₹' + ${p.totalDeduction}"></td>
+                            <td style="font-weight: bold; color: #2ecc71;"
+                                th:text="'₹' + ${p.netSalary}"></td>
+                            <td>
+                                    <span th:if="${p.status == 'GENERATED'}"
+                                          style="background-color: #f6c23e;
+                                                 color: white; padding: 4px 10px;
+                                                 border-radius: 20px;
+                                                 font-size: 12px;">
+                                        Generated
+                                    </span>
+                                <span th:if="${p.status == 'PAID'}"
+                                      style="background-color: #2ecc71;
+                                                 color: white; padding: 4px 10px;
+                                                 border-radius: 20px;
+                                                 font-size: 12px;">
+                                        Paid ✅
+                                    </span>
+                            </td>
+                            <td style="display: flex; gap: 5px;">
+                                <!-- View Slip -->
+                                <a th:href="@{/salary-slip(id=${p.id})}"
+                                   style="background-color: #3498db;
+                                              color: white; padding: 5px 10px;
+                                              border-radius: 6px;
+                                              text-decoration: none;
+                                              font-size: 12px;">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
+                                <!-- Mark Paid -->
+                                <a th:if="${p.status == 'GENERATED'}"
+                                   th:href="@{/mark-paid(id=${p.id})}"
+                                   style="background-color: #2ecc71;
+                                              color: white; padding: 5px 10px;
+                                              border-radius: 6px;
+                                              text-decoration: none;
+                                              font-size: 12px;">
+                                    <i class="fas fa-check"></i> Paid
+                                </a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(payrolls)}">
+                            <td colspan="10"
+                                class="text-center text-muted">
+                                No Payrolls Generated Yet
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

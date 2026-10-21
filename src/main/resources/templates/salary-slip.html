@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html><!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Salary Slip</title>
+</head>
+<body>
+<section>
+    <div class="row mt-3">
+        <div class="col-md-8 offset-md-2">
+
+            <!-- Print Button -->
+            <div class="d-flex justify-content-between mb-3">
+                <a th:href="@{/payroll}"
+                   style="background-color: #3498db; color: white;
+                          padding: 8px 16px; border-radius: 8px;
+                          text-decoration: none; font-weight: bold;">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+                <button onclick="window.print()"
+                        style="background-color: #2ecc71; color: white;
+                               border: none; padding: 8px 16px;
+                               border-radius: 8px; cursor: pointer;
+                               font-weight: bold;">
+                    <i class="fas fa-print"></i> Print / Download PDF
+                </button>
+            </div>
+
+            <!-- Salary Slip Card -->
+            <div class="card" id="salarySlip"
+                 style="border-radius: 12px; border: none;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <div class="card-body" style="padding: 30px;">
+
+                    <!-- Company Header -->
+                    <div style="text-align: center; margin-bottom: 20px;
+                                border-bottom: 2px solid #2c3e50;
+                                padding-bottom: 15px;">
+                        <h4 style="color: #2c3e50; font-weight: bold;">
+                            Employee Management Portal
+                        </h4>
+                        <p style="color: #7f8c8d; margin: 0;">
+                            Salary Slip
+                        </p>
+                        <p style="color: #7f8c8d; margin: 0;"
+                           th:text="${payroll.month} + ' ' + ${payroll.year}">
+                        </p>
+                    </div>
+
+                    <!-- Employee Details -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="padding: 5px;
+                                               color: #7f8c8d;">
+                                        Employee Name
+                                    </td>
+                                    <td style="padding: 5px;
+                                               font-weight: bold;"
+                                        th:text="${payroll.employeeName}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 5px;
+                                               color: #7f8c8d;">
+                                        Department
+                                    </td>
+                                    <td style="padding: 5px;
+                                               font-weight: bold;"
+                                        th:text="${payroll.department}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 5px;
+                                               color: #7f8c8d;">
+                                        Designation
+                                    </td>
+                                    <td style="padding: 5px;
+                                               font-weight: bold;"
+                                        th:text="${payroll.designation}">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="padding: 5px;
+                                               color: #7f8c8d;">
+                                        Month
+                                    </td>
+                                    <td style="padding: 5px;
+                                               font-weight: bold;"
+                                        th:text="${payroll.month}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 5px;
+                                               color: #7f8c8d;">
+                                        Year
+                                    </td>
+                                    <td style="padding: 5px;
+                                               font-weight: bold;"
+                                        th:text="${payroll.year}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 5px;
+                                               color: #7f8c8d;">
+                                        Status
+                                    </td>
+                                    <td style="padding: 5px;">
+                                        <span th:text="${payroll.status}"
+                                              style="background-color: #2ecc71;
+                                                     color: white;
+                                                     padding: 3px 10px;
+                                                     border-radius: 20px;
+                                                     font-size: 12px;">
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <hr style="border-color: #ecf0f1;">
+
+                    <!-- Salary Table -->
+                    <div class="row">
+
+                        <!-- Earnings -->
+                        <div class="col-md-6">
+                            <h6 style="color: #2ecc71; font-weight: bold;
+                                       border-bottom: 2px solid #2ecc71;
+                                       padding-bottom: 5px;">
+                                EARNINGS
+                            </h6>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="padding: 8px 5px;
+                                               color: #555;">
+                                        Basic Salary
+                                    </td>
+                                    <td style="padding: 8px 5px;
+                                               font-weight: bold;
+                                               text-align: right;"
+                                        th:text="'₹ ' + ${payroll.basicSalary}">
+                                    </td>
+                                </tr>
+                                <tr style="background-color: #f8f9fa;">
+                                    <td style="padding: 8px 5px;
+                                               color: #555;">
+                                        HRA (40%)
+                                    </td>
+                                    <td style="padding: 8px 5px;
+                                               font-weight: bold;
+                                               text-align: right;"
+                                        th:text="'₹ ' + ${payroll.hra}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px 5px;
+                                               color: #555;">
+                                        Allowance (20%)
+                                    </td>
+                                    <td style="padding: 8px 5px;
+                                               font-weight: bold;
+                                               text-align: right;"
+                                        th:text="'₹ ' + ${payroll.allowance}">
+                                    </td>
+                                </tr>
+                                <tr style="background-color: #2ecc71;">
+                                    <td style="padding: 8px 5px;
+                                               color: white;
+                                               font-weight: bold;">
+                                        Gross Salary
+                                    </td>
+                                    <td style="padding: 8px 5px;
+                                               color: white;
+                                               font-weight: bold;
+                                               text-align: right;"
+                                        th:text="'₹ ' + ${payroll.grossSalary}">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!-- Deductions -->
+                        <div class="col-md-6">
+                            <h6 style="color: #e74c3c; font-weight: bold;
+                                       border-bottom: 2px solid #e74c3c;
+                                       padding-bottom: 5px;">
+                                DEDUCTIONS
+                            </h6>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="padding: 8px 5px;
+                                               color: #555;">
+                                        PF (12%)
+                                    </td>
+                                    <td style="padding: 8px 5px;
+                                               font-weight: bold;
+                                               text-align: right;"
+                                        th:text="'₹ ' + ${payroll.pfDeduction}">
+                                    </td>
+                                </tr>
+                                <tr style="background-color: #f8f9fa;">
+                                    <td style="padding: 8px 5px;
+                                               color: #555;">
+                                        Tax (10%)
+                                    </td>
+                                    <td style="padding: 8px 5px;
+                                               font-weight: bold;
+                                               text-align: right;"
+                                        th:text="'₹ ' + ${payroll.taxDeduction}">
+                                    </td>
+                                </tr>
+                                <tr style="background-color: #e74c3c;">
+                                    <td style="padding: 8px 5px;
+                                               color: white;
+                                               font-weight: bold;">
+                                        Total Deductions
+                                    </td>
+                                    <td style="padding: 8px 5px;
+                                               color: white;
+                                               font-weight: bold;
+                                               text-align: right;"
+                                        th:text="'₹ ' + ${payroll.totalDeduction}">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <hr style="border-color: #ecf0f1; margin-top: 20px;">
+
+                    <!-- Net Salary -->
+                    <div style="background-color: #2c3e50; padding: 15px 20px;
+                                border-radius: 10px; margin-top: 10px;
+                                display: flex; justify-content: space-between;
+                                align-items: center;">
+                        <h5 style="color: white; margin: 0;">
+                            NET SALARY
+                        </h5>
+                        <h4 style="color: #2ecc71; margin: 0;
+                                   font-weight: bold;"
+                            th:text="'₹ ' + ${payroll.netSalary}">
+                        </h4>
+                    </div>
+
+                    <!-- Footer -->
+                    <div style="text-align: center; margin-top: 30px;
+                                color: #95a5a6; font-size: 12px;">
+                        <p>This is a computer generated salary slip.</p>
+                        <p>Employee Management Portal
+                            <span th:text="${payroll.year}"></span>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Print CSS -->
+    <style>
+        @media print {
+            nav, .d-flex.justify-content-between.mb-3 {
+                display: none !important;
+            }
+            #salarySlip {
+                box-shadow: none !important;
+            }
+        }
+    </style>
+
+</section>
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>My Profiile </title>
+</head>
+<body>
+<!--<section>-->
+<!--  -->
+<!--    -->
+<!--    <div class="row">-->
+<!--    -->
+<!--      <div class="col-md-6 offset-md-3 mt-3">-->
+<!--      -->
+<!--         <div class="card">-->
+<!--         -->
+<!--           <div class="card-body">-->
+<!--              -->
+<!--              <div class="container text-center">-->
+<!--             <img alt="image" th:src="@{/img/default.png}" style="height: 100px">-->
+<!--              <h5 th:text="${employee.employeeName}"></h5>-->
+<!--              <p><i th:text="${employee.designation}"></i></p>-->
+<!--              <hr>-->
+<!--             </div>-->
+<!--             -->
+<!--             <table class="table">-->
+<!--			  -->
+<!--			  <tbody>-->
+<!--			    <tr>-->
+<!--			      <th scope="row">1</th>-->
+<!--			      <td><b>Email</b></td>-->
+<!--			      <td th:text="${employee.email}">Otto</td>-->
+<!-- 			    </tr>-->
+<!--			    <tr>-->
+<!--			      <th scope="row">2</th>-->
+<!--			      <td><b>Gender</b></td>-->
+<!--			      <td th:text="${employee.gender}">Thornton</td>-->
+<!-- 			    </tr>-->
+<!--			    <tr>-->
+<!--			      <th scope="row">3</th>-->
+<!--			      <td ><b>Date of Birth </b></td>-->
+<!--			      <td th:text="${employee.dateOfBirth}">Larry the Bird</td>-->
+<!-- 			    </tr>-->
+<!-- 			    -->
+<!-- 			    <tr>-->
+<!--			      <th scope="row">4</th>-->
+<!--			      <td ><b>Mobile Number </b></td>-->
+<!--			      <td th:text="${employee.mobileNumber}">Larry the Bird</td>-->
+<!-- 			    </tr>-->
+<!-- 			    -->
+<!-- 			    <tr>-->
+<!--			      <th scope="row">5</th>-->
+<!--			      <td ><b>Department</b></td>-->
+<!--			      <td th:text="${employee.department}">Larry the Bird</td>-->
+<!-- 			    </tr>-->
+<!-- 			    -->
+<!-- 			    <tr>-->
+<!--			      <th scope="row">6</th>-->
+<!--			      <td ><b>Current Address</b></td>-->
+<!--			      <td th:text="${employee.currentAddress}">Larry the Bird</td>-->
+<!-- 			    </tr>-->
+<!-- 			    -->
+<!-- 			    <tr>-->
+<!--			      <th scope="row">7</th>-->
+<!--			      <td ><b>Permanent Address</b></td>-->
+<!--			      <td th:text="${employee.permanentAddress}">Larry the Bird</td>-->
+<!-- 			    </tr>-->
+<!--			  </tbody>-->
+<!--			</table>-->
+<!--             -->
+<!--           </div>-->
+<!--         -->
+<!--         </div>-->
+<!--      -->
+<!--      </div>-->
+<!--    -->
+<!--    </div>-->
+<!--   -->
+<!--  -->
+<!--</section>-->
+<<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile</title>
+</head>
+<body>
+<section>
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3 mt-3">
+            <div class="card" style="border-radius: 15px; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <div class="card-body">
+
+                    <!-- ✅ Profile Image Section -->
+                    <div class="container text-center" style="padding: 20px 0;">
+
+                        <form th:action="@{/upload-profile-image}" method="post" enctype="multipart/form-data" id="imageForm">
+
+                            <!-- Show uploaded image -->
+                            <img th:if="${employee.profileImage != null}"
+                                 th:src="@{'/img/' + ${employee.profileImage}}"
+                                 id="profilePreview"
+                                 onclick="document.getElementById('imageInput').click()"
+                                 style="height: 110px; width: 110px; border-radius: 50%;
+                                        border: 4px solid #3498db; object-fit: cover;
+                                        cursor: pointer; box-shadow: 0 4px 10px rgba(52,152,219,0.4);"
+                                 alt="Profile">
+
+                            <!-- Default image -->
+                            <img th:if="${employee.profileImage == null}"
+                                 src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                                 id="profilePreview"
+                                 onclick="document.getElementById('imageInput').click()"
+                                 style="height: 110px; width: 110px; border-radius: 50%;
+                                        border: 4px solid #3498db; object-fit: cover;
+                                        cursor: pointer; box-shadow: 0 4px 10px rgba(52,152,219,0.4);"
+                                 alt="Profile">
+
+                            <!-- Click to change -->
+                            <div style="margin-top: 8px;">
+                                <span style="background-color: #3498db; color: white;
+                                             font-size: 11px; padding: 4px 10px;
+                                             border-radius: 20px; cursor: pointer;"
+                                      onclick="document.getElementById('imageInput').click()">
+                                    <i class="fas fa-camera"></i> Click to change photo
+                                </span>
+                            </div>
+
+                            <!-- Hidden file input -->
+                            <input type="file"
+                                   id="imageInput"
+                                   name="image"
+                                   accept="image/*"
+                                   style="display: none;"
+                                   onchange="previewAndUpload(this)">
+                        </form>
+
+                        <!-- Name & Designation -->
+                        <h5 style="margin-top: 15px; font-weight: bold; color: #2c3e50;"
+                            th:text="${employee.employeeName}"></h5>
+                        <p style="color: #7f8c8d; font-style: italic;"
+                           th:text="${employee.designation}"></p>
+                        <hr style="border-color: #ecf0f1;">
+                    </div>
+
+                    <!-- ✅ Info Table -->
+                    <table class="table">
+                        <tbody>
+
+                        <tr style="border-bottom: 1px solid #ecf0f1;">
+                            <th scope="row"
+                                style="background-color: #3498db; color: white;
+                                           border-radius: 5px; text-align: center; width: 40px;">1</th>
+                            <td><b style="color: #2c3e50;">Email</b></td>
+                            <td style="color: #555;" th:text="${employee.email}"></td>
+                        </tr>
+
+                        <tr style="border-bottom: 1px solid #ecf0f1;">
+                            <th scope="row"
+                                style="background-color: #2ecc71; color: white;
+                                           border-radius: 5px; text-align: center;">2</th>
+                            <td><b style="color: #2c3e50;">Gender</b></td>
+                            <td style="color: #555;" th:text="${employee.gender}"></td>
+                        </tr>
+
+                        <tr style="border-bottom: 1px solid #ecf0f1;">
+                            <th scope="row"
+                                style="background-color: #9b59b6; color: white;
+                                           border-radius: 5px; text-align: center;">3</th>
+                            <td><b style="color: #2c3e50;">Date of Birth</b></td>
+                            <td style="color: #555;" th:text="${employee.dateOfBirth}"></td>
+                        </tr>
+
+                        <tr style="border-bottom: 1px solid #ecf0f1;">
+                            <th scope="row"
+                                style="background-color: #e67e22; color: white;
+                                           border-radius: 5px; text-align: center;">4</th>
+                            <td><b style="color: #2c3e50;">Mobile Number</b></td>
+                            <td style="color: #555;" th:text="${employee.mobileNumber}"></td>
+                        </tr>
+
+                        <tr style="border-bottom: 1px solid #ecf0f1;">
+                            <th scope="row"
+                                style="background-color: #e74c3c; color: white;
+                                           border-radius: 5px; text-align: center;">5</th>
+                            <td><b style="color: #2c3e50;">Department</b></td>
+                            <td style="color: #555;" th:text="${employee.department}"></td>
+                        </tr>
+
+                        <tr style="border-bottom: 1px solid #ecf0f1;">
+                            <th scope="row"
+                                style="background-color: #1abc9c; color: white;
+                                           border-radius: 5px; text-align: center;">6</th>
+                            <td><b style="color: #2c3e50;">Current Address</b></td>
+                            <td style="color: #555;" th:text="${employee.currentAddress}"></td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row"
+                                style="background-color: #95a5a6; color: white;
+                                           border-radius: 5px; text-align: center;">7</th>
+                            <td><b style="color: #2c3e50;">Permanent Address</b></td>
+                            <td style="color: #555;" th:text="${employee.permanentAddress}"></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✅ Script -->
+    <script>
+        function previewAndUpload(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profilePreview').src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+                document.getElementById('imageForm').submit();
+            }
+        }
+    </script>
+
+</section>
+
+ 
+</body>
+</html>

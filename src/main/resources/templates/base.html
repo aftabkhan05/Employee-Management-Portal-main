@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
+<head>
+<meta charset="UTF-8">
+<title>HMP</title>
+
+<link rel="icon" href="img/emp-login.png">
+<!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="css/style.css" rel="stylesheet">
+
+<!-- DataTables CSS and JS CDN -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    
+    <!-- DataTables Buttons extension for export functionality -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+</head>
+<body>
+
+  <nav class="navbar navbar-light fixed-top navbar-dark bg-danger">
+  <div class="container-fluid">
+     <h3> <a class="navbar-brand" th:href="@{/dash-board}"> Employee Management Portal</a></h3>
+    <form class="d-flex">
+
+        <!-- ✅ Right Corner Profile -->
+        <div style="position: relative; display: inline-block;">
+
+            <!-- ✅ Clickable Profile Image -->
+            <img th:if="${session.profileImage != null}"
+                 th:src="@{'/img/' + ${session.profileImage}}"
+                 id="profileBtn"
+                 onclick="toggleDropdown()"
+                 style="height: 38px; width: 38px; border-radius: 50%;
+                object-fit: cover; border: 2px solid white;
+                cursor: pointer;"
+                 alt="Profile">
+            <!-- ✅ Add this below your existing profile img tag --><!-- ✅ Add this below your existing profile img tag -->
+<!--            <img th:if="${session.profileImage == null}"-->
+<!--                 src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"-->
+<!--                 id="profileBtn"-->
+<!--                 onclick="toggleDropdown()"-->
+<!--                 style="height: 38px; width: 38px; border-radius: 50%;-->
+<!--            object-fit: cover; border: 2px solid white;-->
+<!--            cursor: pointer;"-->
+<!--                 alt="Profile">-->
+
+
+
+
+
+            <!-- ✅ Dropdown -->
+            <div id="profileDropdown"
+                 style="display: none;
+                position: absolute;
+                top: 48px;
+                right: 0;
+                background-color: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+                width: 200px;
+                z-index: 9999;">
+
+                <!-- Name Row -->
+                <div style="padding: 12px 15px;
+                    border-bottom: 1px solid #f0f0f0;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;">
+                    <i class="fas fa-user" style="color: #555;"></i>
+                    <span style="font-weight: 600; color: #2c3e50;"
+                          th:text="${session.name}">Name</span>
+                </div>
+
+                <!-- Designation Row -->
+                <div style="padding: 12px 15px;
+                    border-bottom: 1px solid #f0f0f0;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;">
+                    <i class="fas fa-laptop-code" style="color: #555;"></i>
+                    <span style="color: #555; font-size: 14px;"
+                          th:text="${session.desg}">Designation</span>
+                </div>
+
+                <!-- Logout Row -->
+                <a th:href="@{/login}"
+                   style="padding: 12px 15px;
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  text-decoration: none;
+                  color: #2c3e50;"
+                   onmouseover="this.style.backgroundColor='#f8f9fa'"
+                   onmouseout="this.style.backgroundColor='white'">
+                    <i class="fas fa-sign-out-alt" style="color: #555;"></i>
+                    <span style="font-weight: 600;">Log out</span>
+                </a>
+
+            </div>
+        </div>
+    </form>
+  </div>
+  </nav>
+
+
+ <div class="container-fluid" style="position: fixed; top: 0; bottom: 0; height: 100vh;">
+        <div class="row">
+<!--            <nav class="col-md-2 sidebar d-none d-md-block"> -->
+<!--              <a th:href="@{/dash-board}"><i class="fas fa-tachometer-alt"></i> <span>Dash Board</span></a>-->
+<!--				<a th:href="@{/add-employee}"><i class="fas fa-user-plus"></i> <span>Add Employee</span></a>-->
+<!--				<a th:href="@{/all-employee}"><i class="fas fa-users"></i> <span>All Employee</span></a>-->
+<!--				<a th:href="@{/create-post}"><i class="fas fa-pencil-alt"></i> <span>Create Post</span></a>-->
+<!--				<a th:href="@{/status}"><i class="fas fa-tasks"></i> <span>Status</span></a>-->
+<!--				<a th:href="@{/my-profile}"><i class="fas fa-user"></i> <span>My Profile</span></a>-->
+<!--				<a th:href="@{/setting}"><i class="fas fa-cog"></i> <span>Setting</span></a>-->
+
+<!--            </nav> -->
+            <nav class="col-md-2 d-none d-md-block" style="min-height: 100vh; background-color: #2c3e50; padding: 70px 10px 20px 10px;">
+                <!-- Dash Board -->
+                <a th:href="@{/dash-board}" style="text-decoration: none;">
+                    <div style="background-color: #3498db; border-radius: 10px; padding: 12px 15px; margin-bottom: 10px; cursor: pointer; transition: all 0.3s;"
+                         onmouseover="this.style.backgroundColor='#2980b9'; this.style.transform='scale(1.03)'"
+                         onmouseout="this.style.backgroundColor='#3498db'; this.style.transform='scale(1)'">
+                        <i class="fas fa-tachometer-alt" style="color: white; font-size: 16px;"></i>
+                        <span style="color: white; font-weight: bold; margin-left: 8px;">Dash Board</span>
+                    </div>
+                </a>
+
+                <!-- Add Employee -->
+                <a th:href="@{/add-employee}" style="text-decoration: none;">
+                    <div style="background-color: #2ecc71; border-radius: 10px; padding: 12px 15px; margin-bottom: 10px; cursor: pointer; transition: all 0.3s;"
+                         onmouseover="this.style.backgroundColor='#27ae60'; this.style.transform='scale(1.03)'"
+                         onmouseout="this.style.backgroundColor='#2ecc71'; this.style.transform='scale(1)'">
+                        <i class="fas fa-user-plus" style="color: white; font-size: 16px;"></i>
+                        <span style="color: white; font-weight: bold; margin-left: 8px;">Add Employee</span>
+                    </div>
+                </a>
+
+                <!-- All Employee -->
+                <a th:href="@{/all-employee}" style="text-decoration: none;">
+                    <div style="background-color: #9b59b6; border-radius: 10px; padding: 12px 15px; margin-bottom: 10px; cursor: pointer; transition: all 0.3s;"
+                         onmouseover="this.style.backgroundColor='#8e44ad'; this.style.transform='scale(1.03)'"
+                         onmouseout="this.style.backgroundColor='#9b59b6'; this.style.transform='scale(1)'">
+                        <i class="fas fa-users" style="color: white; font-size: 16px;"></i>
+                        <span style="color: white; font-weight: bold; margin-left: 8px;">All Employee</span>
+                    </div>
+                </a>
+
+                <!-- Create Post -->
+                <a th:href="@{/create-post}" style="text-decoration: none;">
+                    <div style="background-color: #e67e22; border-radius: 10px; padding: 12px 15px; margin-bottom: 10px; cursor: pointer; transition: all 0.3s;"
+                         onmouseover="this.style.backgroundColor='#d35400'; this.style.transform='scale(1.03)'"
+                         onmouseout="this.style.backgroundColor='#e67e22'; this.style.transform='scale(1)'">
+                        <i class="fas fa-pencil-alt" style="color: white; font-size: 16px;"></i>
+                        <span style="color: white; font-weight: bold; margin-left: 8px;">Create Post</span>
+                    </div>
+                </a>
+
+                <!-- Status -->
+                <a th:href="@{/status}" style="text-decoration: none;">
+                    <div style="background-color: #e74c3c; border-radius: 10px; padding: 12px 15px; margin-bottom: 10px; cursor: pointer; transition: all 0.3s;"
+                         onmouseover="this.style.backgroundColor='#c0392b'; this.style.transform='scale(1.03)'"
+                         onmouseout="this.style.backgroundColor='#e74c3c'; this.style.transform='scale(1)'">
+                        <i class="fas fa-tasks" style="color: white; font-size: 16px;"></i>
+                        <span style="color: white; font-weight: bold; margin-left: 8px;">Status</span>
+                    </div>
+                </a>
+
+                <!-- Add Attendance in sidebar -->
+                <a th:href="@{/attendance}" style="text-decoration: none;">
+                    <div style="background-color: #f39c12; border-radius: 10px;
+                padding: 12px 15px; margin-bottom: 10px; cursor: pointer; transition: all 0.3s;"
+                         onmouseover="this.style.backgroundColor='#e67e22'; this.style.transform='scale(1.03)'"
+                         onmouseout="this.style.backgroundColor='#f39c12'; this.style.transform='scale(1)'">
+                        <i class="fas fa-calendar-check" style="color: white; font-size: 16px;"></i>
+                        <span style="color: white; font-weight: bold; margin-left: 8px;">Attendance</span>
+                    </div>
+                </a>
+
+
+
+
+                <!-- My Profile -->
+                <a th:href="@{/my-profile}" style="text-decoration: none;">
+                    <div style="background-color: #1abc9c; border-radius: 10px; padding: 12px 15px; margin-bottom: 10px; cursor: pointer; transition: all 0.3s;"
+                         onmouseover="this.style.backgroundColor='#16a085'; this.style.transform='scale(1.03)'"
+                         onmouseout="this.style.backgroundColor='#1abc9c'; this.style.transform='scale(1)'">
+                        <i class="fas fa-user" style="color: white; font-size: 16px;"></i>
+                        <span style="color: white; font-weight: bold; margin-left: 8px;">My Profile</span>
+                    </div>
+                </a>
+                <a th:href="@{/payroll}" style="text-decoration: none;">
+                    <div style="background-color: #27ae60; border-radius: 10px;
+                padding: 12px 15px; margin-bottom: 10px;
+                cursor: pointer; transition: all 0.3s;"
+                         onmouseover="this.style.backgroundColor='#2ecc71';
+                      this.style.transform='scale(1.03)'"
+                         onmouseout="this.style.backgroundColor='#27ae60';
+                     this.style.transform='scale(1)'">
+                        <i class="fas fa-money-bill-wave"
+                           style="color: white; font-size: 16px;"></i>
+                        <span style="color: white; font-weight: bold;
+                     margin-left: 8px;">Payroll</span>
+                    </div>
+                </a>
+                <!-- Setting -->
+                <a th:href="@{/setting}" style="text-decoration: none;">
+                    <div style="background-color: #95a5a6; border-radius: 10px; padding: 12px 15px; margin-bottom: 10px; cursor: pointer; transition: all 0.3s;"
+                         onmouseover="this.style.backgroundColor='#7f8c8d'; this.style.transform='scale(1.03)'"
+                         onmouseout="this.style.backgroundColor='#95a5a6'; this.style.transform='scale(1)'">
+                        <i class="fas fa-cog" style="color: white; font-size: 16px;"></i>
+                        <span style="color: white; font-weight: bold; margin-left: 8px;">Setting</span>
+                    </div>
+                </a>
+
+            </nav>
+
+            <main class="col-md-10" style="padding-top: 60px; background-color: #f2f3f4; height: 100vh; overflow-y: auto;">
+                 <!-- Content -->
+                 <div th:replace="${content}"></div>
+            </main>
+        </div>
+    </div>
+    
+    <nav class="navbar navbar-light fixed-bottom d-block d-md-none" style="background-color: #e3f2fd;">
+    <div class="d-flex justify-content-around w-100">
+        <a th:href="@{/dash-board}" class="flex-fill text-center"><i class="fas fa-tachometer-alt"></i></a>
+        <a th:href="@{/add-employee}" class="flex-fill text-center"><i class="fas fa-user-plus"></i></a>
+        <a th:href="@{/all-employee}" class="flex-fill text-center"><i class="fas fa-users"></i></a>
+        <a th:href="@{/all-employee}" class="flex-fill text-center"><i class="fas fa-pencil-alt"></i></a>
+        <a th:href="@{/create-post}" class="flex-fill text-center"><i class="fas fa-tasks"></i></a>
+        <a th:href="@{/my-profile}" class="flex-fill text-center"><i class="fas fa-user"></i></a>
+        <a  th:href="@{/setting}" class="flex-fill text-center"><i class="fas fa-cog"></i></a>
+    </div>
+</nav>
+    
+</body>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+<script type="text/javascript" src="js/emp.js"></script>
+
+
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    
+    <script>
+    $(document).ready(function() {
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'excelHtml5',
+                'pdfHtml5'
+            ]
+        });
+    });
+    
+   
+
+</script>
+<script>
+    function toggleDropdown() {
+        var dropdown = document.getElementById('profileDropdown');
+        dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // Close when clicking outside
+    window.onclick = function(event) {
+        if (!event.target.matches('#profileBtn')) {
+            var dropdown = document.getElementById('profileDropdown');
+            if (dropdown && dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+            }
+        }
+    }
+</script>
+
+
+
+</html>

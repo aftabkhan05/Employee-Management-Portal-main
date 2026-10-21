@@ -1,0 +1,15 @@
+# Optional Render Blueprint. Use "New > Blueprint" on Render, or just create a
+# Web Service manually with Runtime = Docker and add the same env vars.
+services:
+  - type: web
+    name: employee-management-portal
+    runtime: docker
+    plan: free
+    healthCheckPath: /login
+    envVars:
+      - key: DB_URL
+        sync: false   # e.g. jdbc:mysql://HOST:PORT/DBNAME?useSSL=true&serverTimezone=UTC
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
